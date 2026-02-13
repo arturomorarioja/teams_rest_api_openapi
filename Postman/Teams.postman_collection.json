@@ -1,0 +1,227 @@
+{
+  "info": {
+    "_postman_id": "f5f4b2d2-6b55-4d92-9f49-08e2b75f5b6a",
+    "name": "Teams API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "GET /teams",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/teams",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "teams"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Response is an array', function () {",
+              "    const json = pm.response.json();",
+              "    pm.expect(Array.isArray(json)).to.equal(true);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "POST /teams (FCK)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"F.C. København\",\n  \"city\": \"Copenhagen\",\n  \"country\": \"Denmark\",\n  \"stadium\": \"Telia Parken\",\n  \"foundation_year\": 1992\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/teams",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "teams"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status is 201', function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "",
+              "pm.test('Location header is present', function () {",
+              "    pm.expect(pm.response.headers.has('Location')).to.equal(true);",
+              "});",
+              "",
+              "pm.test('Response has an id and is FCK', function () {",
+              "    const json = pm.response.json();",
+              "    pm.expect(json).to.have.property('id');",
+              "    pm.expect(json.name).to.equal('F.C. København');",
+              "    pm.environment.set('team_id', String(json.id));",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET /teams/:id (FCK)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/teams/{{team_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "teams",
+            "{{team_id}}"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Response id matches environment and name is FCK', function () {",
+              "    const json = pm.response.json();",
+              "    pm.expect(String(json.id)).to.equal(pm.environment.get('team_id'));",
+              "    pm.expect(json.name).to.equal('F.C. København');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "PUT /teams/:id (FCK update)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"F.C. København\",\n  \"city\": \"Copenhagen\",\n  \"country\": \"Denmark\",\n  \"stadium\": \"Parken Stadium\",\n  \"foundation_year\": 1992\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/teams/{{team_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "teams",
+            "{{team_id}}"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Still FCK and stadium is Parken Stadium', function () {",
+              "    const json = pm.response.json();",
+              "    pm.expect(json.stadium).to.equal('Parken Stadium');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "DELETE /teams/:id (FCK)",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/teams/{{team_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "teams",
+            "{{team_id}}"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status is 204', function () {",
+              "    pm.response.to.have.status(204);",
+              "});",
+              "",
+              "pm.environment.unset('team_id');"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

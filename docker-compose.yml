@@ -1,0 +1,10 @@
+services:
+  teams_api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: teams_api
+    ports:
+      - '5000:5000'
+    volumes:
+      - ./teams.db:/app/teams.db
