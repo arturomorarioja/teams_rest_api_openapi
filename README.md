@@ -19,7 +19,7 @@ REST API example with OpenAPI documentation.
 The folder `Postman` contains a Postman collection and environment with test scripts.
 
 ### Documentation
-Find the OpenAPI description at `http://localhost:5000/openapi.json`.
+Find the OpenAPI description at `http://localhost:5000/static/openapi.json`.
 
 Find the OpenAPI documentation at `http://localhost:5000/docs`.
 

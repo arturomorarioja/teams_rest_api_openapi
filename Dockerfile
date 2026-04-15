@@ -10,6 +10,7 @@ RUN pip install --no-cache-dir -r /app/requirements.txt
 
 COPY teams.py /app/teams.py
 COPY teams.db /app/teams.db
+COPY static /app/static
 
 EXPOSE 5000
 
